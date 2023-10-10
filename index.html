@@ -14,6 +14,10 @@
 
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/bulma-carousel@4.0.24/dist/js/bulma-carousel.min.js"></script>
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/default.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/languages/python.min.js"></script>
 </head>
 
 <body>
@@ -23,9 +27,12 @@
         <div class="columns is-centered">
           <div class="column has-text-centered">
             <h1 class="title is-1 publication-title">Robotic Task Generalization via Hindsight Trajectory Sketches</h1>
-            <div class="publication-video">
-              <iframe src="https://www.youtube.com/embed/uYu_HOtQDn4" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
-            </div>
+            <br>
+            <figure class="image is-16by9">
+              <iframe class="has-ratio" width="560" height="315" src="https://www.youtube.com/embed/uYu_HOtQDn4" frameborder="0"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+              allowfullscreen></iframe>
+            </figure>
           </div>
         </div>
       </div>
@@ -36,13 +43,12 @@
     <div class="container is-max-desktop">
       <div class="columns is-centered">
         <div class="column is-four-fifths has-text-centered">
-          <h2 class="title is-2">Abstract</h2>
+          <h2 class="title is-3">Abstract</h2>
           <div class="content has-text-justified">
             <p>
               Generalization remains one of the most important desiderata for robust robot learning systems. While recently proposed approaches show promise in generalization to novel objects, semantic concepts, or visual distribution shifts, generalization to new tasks remains challenging. For example, a language-conditioned policy trained on pick-and-place tasks will not be able to generalize to a folding task, even if the arm trajectory of folding is similar to pick-and-place. Our key insight is that this kind of generalization becomes feasible if we represent the task through rough trajectory sketches. We propose a policy conditioning method using such rough trajectory sketches, which we call <b>RT-Trajectory</b>, that is practical, easy to specify, and allows the policy to effectively perform new tasks that would otherwise be challenging to perform. We find that trajectory sketches strike a balance between being detailed enough to express low-level motion-centric guidance while being coarse enough to allow the learned policy to interpret the trajectory sketch in the context of situational visual observations. In addition, we show how trajectory sketches can provide a useful interface to communicate with robotic policies -- they can be specified through simple human inputs like drawings or videos, or through automated methods such as modern image-generating or waypoint-generating methods. We evaluate <b>RT-Trajectory</b> at scale on a variety of real-world robotic tasks, and find that <b>RT-Trajectory</b> is able to perform a wider range of tasks compared to language-conditioned and goal-conditioned policies, when provided the same training data.
             </p>
           </div>
-          
         </div>
       </div>
     </div>
@@ -56,7 +62,7 @@
           <div class="content has-text-justified">
             <img class="image" src="static/img/[RT-T] Architecture.png" alt="Overview">
             <p>
-              We propose <b>RT-Trajectory</b>, a framework for utilizing coarse trajectory sketches for policy conditioning. We train on hindsight trajectory sketches (top left) and evaluate on inference trajectories (bottom left) produced via <i>Trajectory Drawings</i>, <i>Human Videos</i>, or <i>Foundation Models</i>. These trajectory sketches are used as task specification for an RT-1 policy backbone (right).
+              We propose <b>RT-Trajectory</b>, which utilizes coarse trajectory sketches for policy conditioning. We train on hindsight trajectory sketches (top left) and evaluate on inference trajectories (bottom left) produced via <i>Trajectory Drawings</i>, <i>Human Videos</i>, or <i>Foundation Models</i>. These trajectory sketches are used as task specification for an RT-1 policy backbone (right).
             </p>
           </div>
         </div>
@@ -68,11 +74,12 @@
     <div class="container is-max-desktop">
       <h2 class="title is-3 has-text-centered">For Training: Hindsight Trajectory Labels</h2>
       <div class="columns is-centered">
-        <div class="column is-6 has-text-centered">
+        <div class="column has-text-centered">
           <h3 class="subtitle is-4">2D Trajectory + Interaction Markers</h2>
           <div class="content has-text-justified">
             <p>
               For each episode in the dataset of demonstrations, we extract a 2D trajectory of robot end-effector center points. Concretely, given the proprioceptive information recorded in the episode, we obtain the 3D position of the robot end-effector center defined in the robot base frame at each time step, and project it to the camera space given the known camera extrinsic and intrinsic parameters. We assume that the robot base and camera do not move within the episode, which is common for stationary manipulation. Given a 2D trajectory (a sequence of pixel positions), we draw a curve on a blank image, by connecting 2D robot end-effector center points at adjacent time steps through straight lines.
+              <br>
               We draw green (or blue) circles at the 2D robot tool center points of all key time steps for closing (or opening) the gripper. 
             </p>
           </div>
@@ -81,10 +88,11 @@
           <video autoplay controls muted loop>
             <source src="static/video/hindsight_trajectory_labels/trajectory-label-basic.mp4" type="video/mp4">
           </video>
+          <div class="content has-text-justified">The <span style="color: #f00">red</span> curve represents the projected 2D trajectory. The <span style="color: #0f0">green</span> marker indicates where the gripper closes and the <span style="color: #00f">blue</span> one indicates where the gripper opens.</div>
         </div>
       </div>
       
-      <h3 class="subtitle is-4 has-text-centered">Color Grading</h2>
+      <h3 class="subtitle is-4 has-text-centered">Color Grading</h3>
       <div class="columns is-centered">
         <div class="column">
           <video autoplay controls muted loop>
@@ -107,7 +115,7 @@
       <h3 class="subtitle is-4 has-text-centered">Trajectory Representations</h2>
       <div class="columns is-centered">
         <div class="column">
-          We propose two forms of trajectory representation from different combinations of the basic elements. Actual trajectory sketches are shown below.
+          We propose two forms of trajectory representation from different combinations of the basic elements: <b>RT-Trajectory (2D)</b> and <b>RT-Trajectory (2.5D)</b>. Here are two example trajectory sketches.
         </div>
       </div>
       <div class="columns is-centered">
@@ -133,10 +141,8 @@
           We use the <a href="https://robotics-transformer1.github.io/">RT-1</a> demonstration dataset for training, which contains 542 instructions inspired by an office kitchen setting. The language instructions consist of 8 different manipulation skills operating on a set of 17 household kitchen items; in total, the dataset consists of 73,334 real robot demonstrations across these 542 seen tasks, which were collected by manual teleoperation.
         </div>
       </div>
-    </div>
-    <br>
-    <div class="container is-max-widescreen">
-      <div class="carousel results-carousel" data-slides-to-show="4">
+      <div>Here are example rollouts of these skills. The corresponding language instruction are shown below the video.</div>
+      <div class="carousel results-carousel">
         <div class="item">
           <video autoplay controls muted loop>
             <source src="static/video/hindsight_trajectory_labels/pick orange can.mp4" type="video/mp4">
@@ -202,367 +208,518 @@
           </div>
         </div>
       </div>
+
+      <div class="columns is-centered">
+        <div class="column is-four-fifths has-text-centered">
+          <h3 class="subtitle is-4">Unseen Skills</h3>
+          <div class="content has-text-justified">
+            <p>
+              We propose 7 new skills for evaluation which include unseen objects and manipulation workspaces, to study whether <b>RT-Trajectory</b> can generalize to tasks beyond those contained in the training dataset.
+              <!-- <strong>For each video below, the left side is the policy rollout, and the right side is the trajectory sketch overlaid on the rollout.</strong> -->
+              The skill <span class="tt">Fold Towel</span> is shown in the <a href="#human-hand-demo">Human Demonstration</a> section.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div class="columns is-centered">
+        <div class="column is-four-fifths has-text-centered">
+          <div>
+            <h4 class="title is-5">Place Fruit</h4>
+          </div>
+          <div class="has-text-justified">
+            <span class="tt">Place Fruit</span> inspects whether the policy can place objects into unseen containers.
+          </div>
+          <div class="carousel results-carousel">
+            <div class="item">
+              <video autoplay controls muted loop>
+                <source src="static/video/human_drawing/rt-traj-2.5d/place_fruit_scene_1.00.01.mp4" type="video/mp4">
+              </video>
+            </div>
+            <div class="item">
+              <video autoplay controls muted loop>
+                <source src="static/video/human_drawing/rt-traj-2.5d/place_fruit_scene_1.02.01.mp4" type="video/mp4">
+              </video>
+            </div>
+            <div class="item">
+              <video autoplay controls muted loop>
+                <source src="static/video/human_drawing/rt-traj-2.5d/place_fruit_scene_1.03.01.mp4" type="video/mp4">
+              </video>
+            </div>
+            <div class="item">
+              <video autoplay controls muted loop>
+                <source src="static/video/human_drawing/rt-traj-2.5d/place_fruit_scene_2.01.01.mp4" type="video/mp4">
+              </video>
+            </div>
+            <div class="item">
+              <video autoplay controls muted loop>
+                <source src="static/video/human_drawing/rt-traj-2.5d/place_fruit_scene_3.01.01.mp4" type="video/mp4">
+              </video>
+            </div>
+            <div class="item">
+              <video autoplay controls muted loop>
+                <source src="static/video/human_drawing/rt-traj-2.5d/place_fruit_scene_3.02.01.mp4" type="video/mp4">
+              </video>
+            </div>
+            <div class="item">
+              <video autoplay controls muted loop>
+                <source src="static/video/human_drawing/rt-traj-2.5d/place_fruit_scene_3.03.01.mp4" type="video/mp4">
+              </video>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="columns is-centered">
+        <div class="column is-four-fifths has-text-centered">
+          <div>
+            <h4 class="title is-5">Upright and Move</h4>
+          </div>
+          <div class="has-text-justified">
+            <span class="tt">Upright and Move</span> examine whether the policy can combine different seen skills (<span class="tt">Place Upright</span> and <span class="tt">Move Near</span>) to form a new skill.
+          </div>
+          <div class="carousel results-carousel">
+            <div class="item">
+              <video autoplay controls muted loop>
+                <source src="static/video/human_drawing/rt-traj-2.5d/upright_and_move_scene_1.00.01.mp4" type="video/mp4">
+              </video>
+            </div>
+            <div class="item">
+              <video autoplay controls muted loop>
+                <source src="static/video/human_drawing/rt-traj-2.5d/upright_and_move_scene_1.01.01.mp4" type="video/mp4">
+              </video>
+            </div>
+            <div class="item">
+              <video autoplay controls muted loop>
+                <source src="static/video/human_drawing/rt-traj-2.5d/upright_and_move_scene_1.02.01.mp4" type="video/mp4">
+              </video>
+            </div>
+            <div class="item">
+              <video autoplay controls muted loop>
+                <source src="static/video/human_drawing/rt-traj-2.5d/upright_and_move_scene_1.03.01.mp4" type="video/mp4">
+              </video>
+            </div>
+            <div class="item">
+              <video autoplay controls muted loop>
+                <source src="static/video/human_drawing/rt-traj-2.5d/upright_and_move_scene_1.04.01.mp4" type="video/mp4">
+              </video>
+            </div>
+            <div class="item">
+              <video autoplay controls muted loop>
+                <source src="static/video/human_drawing/rt-traj-2.5d/upright_and_move_scene_1.05.01.mp4" type="video/mp4">
+              </video>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="columns is-centered">
+        <div class="column is-four-fifths has-text-centered">
+          <div>
+            <h4 class="title is-5">Move within Drawer</h4>
+          </div>
+          <div class="has-text-justified">
+            <span class="tt">Move within Drawer</span> studies whether the policy is able to move objects within the drawer while the seen skill <span class="tt">Move Near</span> only covers those motions at height of the tabletop.
+          </div>
+          <div class="carousel results-carousel">
+            <div class="item">
+              <video autoplay controls muted loop>
+                <source src="static/video/human_drawing/rt-traj-2.5d/move_at_drawer_scene_1.00.01.mp4" type="video/mp4">
+              </video>
+            </div>
+            <div class="item">
+              <video autoplay controls muted loop>
+                <source src="static/video/human_drawing/rt-traj-2.5d/move_at_drawer_scene_1.01.01.mp4" type="video/mp4">
+              </video>
+            </div>
+            <div class="item">
+              <video autoplay controls muted loop>
+                <source src="static/video/human_drawing/rt-traj-2.5d/move_at_drawer_scene_1.02.01.mp4" type="video/mp4">
+              </video>
+            </div>
+            <div class="item">
+              <video autoplay controls muted loop>
+                <source src="static/video/human_drawing/rt-traj-2.5d/move_at_drawer_scene_1.04.01.mp4" type="video/mp4">
+              </video>
+            </div>
+            <div class="item">
+              <video autoplay controls muted loop>
+                <source src="static/video/human_drawing/rt-traj-2.5d/move_at_drawer_scene_1.05.01.mp4" type="video/mp4">
+              </video>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="columns is-centered">
+        <div class="column is-four-fifths has-text-centered">
+          <div>
+            <h4 class="title is-5">Restock Drawer</h4>
+          </div>
+          <div class="has-text-justified">
+            <span class="tt">Restock Drawer</span> requires the robot to place snacks into the drawer at an empty slot. It studies whether the policy is able to place objects at target positions precisely.
+          </div>
+          <div class="carousel results-carousel">
+            <div class="item">
+              <video autoplay controls muted loop>
+                <source src="static/video/human_drawing/rt-traj-2.5d/restock_drawer_scene_1.00.01.mp4" type="video/mp4">
+              </video>
+            </div>
+            <div class="item">
+              <video autoplay controls muted loop>
+                <source src="static/video/human_drawing/rt-traj-2.5d/restock_drawer_scene_1.01.01.mp4" type="video/mp4">
+              </video>
+            </div>
+            <div class="item">
+              <video autoplay controls muted loop>
+                <source src="static/video/human_drawing/rt-traj-2.5d/restock_drawer_scene_1.02.01.mp4" type="video/mp4">
+              </video>
+            </div>
+            <div class="item">
+              <video autoplay controls muted loop>
+                <source src="static/video/human_drawing/rt-traj-2.5d/restock_drawer_scene_1.03.01.mp4" type="video/mp4">
+              </video>
+            </div>
+            <div class="item">
+              <video autoplay controls muted loop>
+                <source src="static/video/human_drawing/rt-traj-2.5d/restock_drawer_scene_1.04.01.mp4" type="video/mp4">
+              </video>
+            </div>
+            <div class="item">
+              <video autoplay controls muted loop>
+                <source src="static/video/human_drawing/rt-traj-2.5d/restock_drawer_scene_1.05.01.mp4" type="video/mp4">
+              </video>
+            </div>
+          </div>
+          <div class="carousel results-carousel">
+            <div class="item">
+              <video autoplay controls muted loop>
+                <source src="static/video/human_drawing/rt-traj-2.5d/restock_drawer_scene_2.00.01.mp4" type="video/mp4">
+              </video>
+            </div>
+            <div class="item">
+              <video autoplay controls muted loop>
+                <source src="static/video/human_drawing/rt-traj-2.5d/restock_drawer_scene_2.01.01.mp4" type="video/mp4">
+              </video>
+            </div>
+            <div class="item">
+              <video autoplay controls muted loop>
+                <source src="static/video/human_drawing/rt-traj-2.5d/restock_drawer_scene_2.02.01.mp4" type="video/mp4">
+              </video>
+            </div>
+            <div class="item">
+              <video autoplay controls muted loop>
+                <source src="static/video/human_drawing/rt-traj-2.5d/restock_drawer_scene_2.03.01.mp4" type="video/mp4">
+              </video>
+            </div>
+            <div class="item">
+              <video autoplay controls muted loop>
+                <source src="static/video/human_drawing/rt-traj-2.5d/restock_drawer_scene_2.04.01.mp4" type="video/mp4">
+              </video>
+            </div>
+            <div class="item">
+              <video autoplay controls muted loop>
+                <source src="static/video/human_drawing/rt-traj-2.5d/restock_drawer_scene_2.05.01.mp4" type="video/mp4">
+              </video>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="columns is-centered">
+        <div class="column is-four-fifths has-text-centered">
+          <div>
+            <h4 class="title is-5">Pick from Chair</h4>
+          </div>
+          <div class="has-text-justified">
+            <span class="tt">Pick from Chair</span> investigates whether the policy can pick objects at an unseen height in an unseen manipulation workspace.
+          </div>
+          <div class="carousel results-carousel">
+            <div class="item">
+              <video autoplay controls muted loop>
+                <source src="static/video/human_drawing/rt-traj-2.5d/pick_from_chair_scene_2.00.01.mp4" type="video/mp4">
+              </video>
+            </div>
+            <div class="item">
+              <video autoplay controls muted loop>
+                <source src="static/video/human_drawing/rt-traj-2.5d/pick_from_chair_scene_2.00.02.mp4" type="video/mp4">
+              </video>
+            </div>
+            <div class="item">
+              <video autoplay controls muted loop>
+                <source src="static/video/human_drawing/rt-traj-2.5d/pick_from_chair_scene_2.00.03.mp4" type="video/mp4">
+              </video>
+            </div>
+            <div class="item">
+              <video autoplay controls muted loop>
+                <source src="static/video/human_drawing/rt-traj-2.5d/pick_from_chair_scene_1.00.01.mp4" type="video/mp4">
+              </video>
+            </div>
+            <div class="item">
+              <video autoplay controls muted loop>
+                <source src="static/video/human_drawing/rt-traj-2.5d/pick_from_chair_scene_1.00.03.mp4" type="video/mp4">
+              </video>
+            </div>
+            <div class="item">
+              <video autoplay controls muted loop>
+                <source src="static/video/human_drawing/rt-traj-2.5d/pick_from_chair_scene_3.00.01.mp4" type="video/mp4">
+              </video>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="columns is-centered">
+        <div class="column is-four-fifths has-text-centered">
+          <div>
+            <h4 class="title is-5">Swivel Chair</h4>
+          </div>
+          <div class="has-text-justified">
+            <span class="tt">Swivel Chair</span> showcase the capability to interact with an underactuated system.
+          </div>
+          <div class="carousel results-carousel">
+            <div class="item">
+              <video autoplay controls muted loop>
+                <source src="static/video/human_drawing/rt-traj-2.5d/swivel_chair_scene_1.00.01.mp4" type="video/mp4">
+              </video>
+            </div>
+            <div class="item">
+              <video autoplay controls muted loop>
+                <source src="static/video/human_drawing/rt-traj-2.5d/swivel_chair_scene_1.00.02.mp4" type="video/mp4">
+              </video>
+            </div>
+            <div class="item">
+              <video autoplay controls muted loop>
+                <source src="static/video/human_drawing/rt-traj-2.5d/swivel_chair_scene_1.00.03.mp4" type="video/mp4">
+              </video>
+            </div>
+            <div class="item">
+              <video autoplay controls muted loop>
+                <source src="static/video/human_drawing/rt-traj-2.5d/swivel_chair_scene_1.00.04.mp4" type="video/mp4">
+              </video>
+            </div>
+            <div class="item">
+              <video autoplay controls muted loop>
+                <source src="static/video/human_drawing/rt-traj-2.5d/swivel_chair_scene_1.00.05.mp4" type="video/mp4">
+              </video>
+            </div>
+            <div class="item">
+              <video autoplay controls muted loop>
+                <source src="static/video/human_drawing/rt-traj-2.5d/swivel_chair_scene_1.00.06.mp4" type="video/mp4">
+              </video>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="columns is-centered">
+        <div class="column is-four-fifths has-text-centered">
+          <h3 class="subtitle is-4">Quantitative Results</h3>
+          <div class="content has-text-justified">
+            We compare <b>RT-Trajectory</b> with other learning-based baselines on generalization to unseen task scenarios.
+            <ul>
+              <li><b>RT-1</b>: language-conditioned policy trained on the same training data;</li>
+              <li><b>RT-2</b>: language-conditioned policy trained on a mixture of our training data and internet-scale VQA data;</li>
+              <li><b>RT-1-goal</b>: goal-conditioned policy trained on the same training data.</li>
+            </ul>
+          </div>
+
+          <img class="image" src="static/img/quantitative-unseen-tasks.png" alt="Quantitative results for unseen skills">
+          <div class="content is-size-6 has-text-justified"><b>Caption:</b> Success rates for unseen tasks when conditioning with human-drawn sketches. Scenarios contain a variety of difficult settings which require combining seen motions in novel ways or generalizing to new motions. Each policy is evaluated for a total of 64 trials across 7 different scenarios.</div>
+          
+          <div class="content has-text-justified">
+            <p>
+              Language-conditioned policies struggle to generalize to the new tasks with semantically unseen language instructions, even if motions to achieve these tasks were seen during training.
+              <b>RT-1-goal</b> shows better generalization than its language-conditioned counterparts. However, goal conditioning is much harder to acquire than trajectory sketches during inference in new scenes and is sensitive to task-irrelevant factors (e.g., backgrounds).
+              <b>RT-Trajectory (2.5D)</b> outperforms <b>RT-Trajectory (2D)</b> on the tasks where height information helps reduce ambiguity. For example, with 2D trajectories only, it is difficult for <b>RT-Trajectory (2D)</b> to infer correct picking height, which is critical for <span class="tt">Pick from Chair</span>.
+            </p>
+          </div>
+        </div>
+      </div>
     </div>
 
-    <br>
-
-    <div class="container is-max-widescreen">
-      <div class="has-text-centered">
-        <h3 class="title is-5 has-text-centered">Place Fruit</h3>
-      </div>
-      <div class="carousel results-carousel" data-slides-to-show="2">
-        <div class="item">
-          <video autoplay controls muted loop>
-            <source src="static/video/human_drawing/rt-traj-2.5d/place_fruit_scene_1.00.01.mp4" type="video/mp4">
-          </video>
-        </div>
-        <div class="item">
-          <video autoplay controls muted loop>
-            <source src="static/video/human_drawing/rt-traj-2.5d/place_fruit_scene_1.02.01.mp4" type="video/mp4">
-          </video>
-        </div>
-        <div class="item">
-          <video autoplay controls muted loop>
-            <source src="static/video/human_drawing/rt-traj-2.5d/place_fruit_scene_1.03.01.mp4" type="video/mp4">
-          </video>
-        </div>
-        <div class="item">
-          <video autoplay controls muted loop>
-            <source src="static/video/human_drawing/rt-traj-2.5d/place_fruit_scene_2.01.01.mp4" type="video/mp4">
-          </video>
-        </div>
-        <div class="item">
-          <video autoplay controls muted loop>
-            <source src="static/video/human_drawing/rt-traj-2.5d/place_fruit_scene_3.01.01.mp4" type="video/mp4">
-          </video>
-        </div>
-        <div class="item">
-          <video autoplay controls muted loop>
-            <source src="static/video/human_drawing/rt-traj-2.5d/place_fruit_scene_3.02.01.mp4" type="video/mp4">
-          </video>
-        </div>
-        <div class="item">
-          <video autoplay controls muted loop>
-            <source src="static/video/human_drawing/rt-traj-2.5d/place_fruit_scene_3.03.01.mp4" type="video/mp4">
-          </video>
-        </div>
-      </div>
-
-      <div class="has-text-centered">
-        <h3 class="title is-5">Upright and Move</h3>
-      </div>
-      <div class="carousel results-carousel" data-slides-to-show="2">
-        <div class="item">
-          <video autoplay controls muted loop>
-            <source src="static/video/human_drawing/rt-traj-2.5d/upright_and_move_scene_1.00.01.mp4" type="video/mp4">
-          </video>
-        </div>
-        <div class="item">
-          <video autoplay controls muted loop>
-            <source src="static/video/human_drawing/rt-traj-2.5d/upright_and_move_scene_1.01.01.mp4" type="video/mp4">
-          </video>
-        </div>
-        <div class="item">
-          <video autoplay controls muted loop>
-            <source src="static/video/human_drawing/rt-traj-2.5d/upright_and_move_scene_1.02.01.mp4" type="video/mp4">
-          </video>
-        </div>
-        <div class="item">
-          <video autoplay controls muted loop>
-            <source src="static/video/human_drawing/rt-traj-2.5d/upright_and_move_scene_1.03.01.mp4" type="video/mp4">
-          </video>
-        </div>
-        <div class="item">
-          <video autoplay controls muted loop>
-            <source src="static/video/human_drawing/rt-traj-2.5d/upright_and_move_scene_1.04.01.mp4" type="video/mp4">
-          </video>
-        </div>
-        <div class="item">
-          <video autoplay controls muted loop>
-            <source src="static/video/human_drawing/rt-traj-2.5d/upright_and_move_scene_1.05.01.mp4" type="video/mp4">
-          </video>
-        </div>
-      </div>
-
-      <div class="has-text-centered">
-        <h3 class="title is-5">Move within Drawer</h3>
-      </div>
-      <div class="carousel results-carousel" data-slides-to-show="2">
-        <div class="item">
-          <video autoplay controls muted loop>
-            <source src="static/video/human_drawing/rt-traj-2.5d/move_at_drawer_scene_1.00.01.mp4" type="video/mp4">
-          </video>
-        </div>
-        <div class="item">
-          <video autoplay controls muted loop>
-            <source src="static/video/human_drawing/rt-traj-2.5d/move_at_drawer_scene_1.01.01.mp4" type="video/mp4">
-          </video>
-        </div>
-        <div class="item">
-          <video autoplay controls muted loop>
-            <source src="static/video/human_drawing/rt-traj-2.5d/move_at_drawer_scene_1.02.01.mp4" type="video/mp4">
-          </video>
-        </div>
-        <div class="item">
-          <video autoplay controls muted loop>
-            <source src="static/video/human_drawing/rt-traj-2.5d/move_at_drawer_scene_1.04.01.mp4" type="video/mp4">
-          </video>
-        </div>
-        <div class="item">
-          <video autoplay controls muted loop>
-            <source src="static/video/human_drawing/rt-traj-2.5d/move_at_drawer_scene_1.05.01.mp4" type="video/mp4">
-          </video>
-        </div>
-      </div>
-
-      <div class="has-text-centered">
-        <h3 class="title is-5">Restock Drawer</h3>
-      </div>
-      <div class="carousel results-carousel" data-slides-to-show="2">
-        <div class="item">
-          <video autoplay controls muted loop>
-            <source src="static/video/human_drawing/rt-traj-2.5d/restock_drawer_scene_1.00.01.mp4" type="video/mp4">
-          </video>
-        </div>
-        <div class="item">
-          <video autoplay controls muted loop>
-            <source src="static/video/human_drawing/rt-traj-2.5d/restock_drawer_scene_1.01.01.mp4" type="video/mp4">
-          </video>
-        </div>
-        <div class="item">
-          <video autoplay controls muted loop>
-            <source src="static/video/human_drawing/rt-traj-2.5d/restock_drawer_scene_1.02.01.mp4" type="video/mp4">
-          </video>
-        </div>
-        <div class="item">
-          <video autoplay controls muted loop>
-            <source src="static/video/human_drawing/rt-traj-2.5d/restock_drawer_scene_1.03.01.mp4" type="video/mp4">
-          </video>
-        </div>
-        <div class="item">
-          <video autoplay controls muted loop>
-            <source src="static/video/human_drawing/rt-traj-2.5d/restock_drawer_scene_1.04.01.mp4" type="video/mp4">
-          </video>
-        </div>
-        <div class="item">
-          <video autoplay controls muted loop>
-            <source src="static/video/human_drawing/rt-traj-2.5d/restock_drawer_scene_1.05.01.mp4" type="video/mp4">
-          </video>
-        </div>
-      </div>
-      <div class="carousel results-carousel" data-slides-to-show="2">
-        <div class="item">
-          <video autoplay controls muted loop>
-            <source src="static/video/human_drawing/rt-traj-2.5d/restock_drawer_scene_2.00.01.mp4" type="video/mp4">
-          </video>
-        </div>
-        <div class="item">
-          <video autoplay controls muted loop>
-            <source src="static/video/human_drawing/rt-traj-2.5d/restock_drawer_scene_2.01.01.mp4" type="video/mp4">
-          </video>
-        </div>
-        <div class="item">
-          <video autoplay controls muted loop>
-            <source src="static/video/human_drawing/rt-traj-2.5d/restock_drawer_scene_2.02.01.mp4" type="video/mp4">
-          </video>
-        </div>
-        <div class="item">
-          <video autoplay controls muted loop>
-            <source src="static/video/human_drawing/rt-traj-2.5d/restock_drawer_scene_2.03.01.mp4" type="video/mp4">
-          </video>
-        </div>
-        <div class="item">
-          <video autoplay controls muted loop>
-            <source src="static/video/human_drawing/rt-traj-2.5d/restock_drawer_scene_2.04.01.mp4" type="video/mp4">
-          </video>
-        </div>
-        <div class="item">
-          <video autoplay controls muted loop>
-            <source src="static/video/human_drawing/rt-traj-2.5d/restock_drawer_scene_2.05.01.mp4" type="video/mp4">
-          </video>
-        </div>
-      </div>
-
-      <div class="has-text-centered">
-        <h3 class="title is-5">Pick from Chair</h3>
-      </div>
-      <div class="carousel results-carousel" data-slides-to-show="2">
-        <div class="item">
-          <video autoplay controls muted loop>
-            <source src="static/video/human_drawing/rt-traj-2.5d/pick_from_chair_scene_2.00.01.mp4" type="video/mp4">
-          </video>
-        </div>
-        <div class="item">
-          <video autoplay controls muted loop>
-            <source src="static/video/human_drawing/rt-traj-2.5d/pick_from_chair_scene_2.00.02.mp4" type="video/mp4">
-          </video>
-        </div>
-        <div class="item">
-          <video autoplay controls muted loop>
-            <source src="static/video/human_drawing/rt-traj-2.5d/pick_from_chair_scene_2.00.03.mp4" type="video/mp4">
-          </video>
-        </div>
-        <div class="item">
-          <video autoplay controls muted loop>
-            <source src="static/video/human_drawing/rt-traj-2.5d/pick_from_chair_scene_1.00.01.mp4" type="video/mp4">
-          </video>
-        </div>
-        <div class="item">
-          <video autoplay controls muted loop>
-            <source src="static/video/human_drawing/rt-traj-2.5d/pick_from_chair_scene_1.00.03.mp4" type="video/mp4">
-          </video>
-        </div>
-        <div class="item">
-          <video autoplay controls muted loop>
-            <source src="static/video/human_drawing/rt-traj-2.5d/pick_from_chair_scene_3.00.01.mp4" type="video/mp4">
-          </video>
-        </div>
-      </div>
-      
-
-      <div class="has-text-centered">
-        <h3 class="title is-5">Swivel chair</h3>
-      </div>
-      <div class="carousel results-carousel" data-slides-to-show="2">
-        <div class="item">
-          <video autoplay controls muted loop>
-            <source src="static/video/human_drawing/rt-traj-2.5d/swivel_chair_scene_1.00.01.mp4" type="video/mp4">
-          </video>
-        </div>
-        <div class="item">
-          <video autoplay controls muted loop>
-            <source src="static/video/human_drawing/rt-traj-2.5d/swivel_chair_scene_1.00.02.mp4" type="video/mp4">
-          </video>
-        </div>
-        <div class="item">
-          <video autoplay controls muted loop>
-            <source src="static/video/human_drawing/rt-traj-2.5d/swivel_chair_scene_1.00.03.mp4" type="video/mp4">
-          </video>
-        </div>
-        <div class="item">
-          <video autoplay controls muted loop>
-            <source src="static/video/human_drawing/rt-traj-2.5d/swivel_chair_scene_1.00.04.mp4" type="video/mp4">
-          </video>
-        </div>
-        <div class="item">
-          <video autoplay controls muted loop>
-            <source src="static/video/human_drawing/rt-traj-2.5d/swivel_chair_scene_1.00.05.mp4" type="video/mp4">
-          </video>
-        </div>
-        <div class="item">
-          <video autoplay controls muted loop>
-            <source src="static/video/human_drawing/rt-traj-2.5d/swivel_chair_scene_1.00.06.mp4" type="video/mp4">
-          </video>
-        </div>
-      </div>
-    </div>
   </section>
 
-  <section class="section">
+  <section class="section" id="human-hand-demo">
     <div class="container is-max-desktop">
       <div class="columns is-centered">
         <div class="column is-four-fifths has-text-centered">
           <h2 class="title is-3">For Inference: Human Demonstration Videos with Hand-object Interaction</h2>
           <div class="content has-text-justified">
             <p>
-              We also study first-person human single-hand demonstration videos. We estimate the trajectory of human hand poses from the video, and convert it to a trajectory of robot tool poses, which can be used to generate a trajectory sketch.
-            </p>
-            <p>
-              The below visualizations show the human demonstration (bottom), the <b>RT-Trajectory</b> policy rollout (top left), and the trajectory sketch overlaid on observations (top right).
+              We also study first-person human single-hand demonstration videos. We estimate the trajectory of human hand poses from the video, and convert it to a trajectory of robot tool poses, which can be used to generate a trajectory sketch. We collect 18 and 4 first-person human demonstration videos with hand-object interaction for <span class="tt">Pick</span> and <span class="tt">Fold Towel</span>.
             </p>
           </div>
         </div>
       </div>
-      
-      <div class="has-text-centered">
-        <h3 class="title is-5">Fold towel</h3>
-      </div>
-      <div class="carousel results-carousel">
-        <div class="item">
-          <video autoplay muted loop>
-            <source src="static/video/human_hand_demo/fold_cloth.01.mp4" type="video/mp4">
-          </video>
-          <video autoplay muted loop>
-            <source src="static/video/human_hand_demo/fold_cloth.01.video.mp4" type="video/mp4">
-          </video>
-        </div>
-        <div class="item">
-          <video autoplay muted loop>
-            <source src="static/video/human_hand_demo/fold_cloth.02.mp4" type="video/mp4">
-          </video>
-          <video autoplay muted loop>
-            <source src="static/video/human_hand_demo/fold_cloth.02.video.mp4" type="video/mp4">
-          </video>
-        </div>
-        <div class="item">
-          <video autoplay muted loop>
-            <source src="static/video/human_hand_demo/fold_cloth.03.mp4" type="video/mp4">
-          </video>
-          <video autoplay muted loop>
-            <source src="static/video/human_hand_demo/fold_cloth.03.video.mp4" type="video/mp4">
-          </video>
-        </div>
-        <div class="item">
-          <video autoplay muted loop>
-            <source src="static/video/human_hand_demo/fold_cloth.04.mp4" type="video/mp4">
-          </video>
-          <video autoplay muted loop>
-            <source src="static/video/human_hand_demo/fold_cloth.04.video.mp4" type="video/mp4">
-          </video>
+
+      <div class="columns is-centered">
+        <div class="column is-four-fifths has-text-centered">
+          <div>
+            <h4 class="title is-5">Fold Towel</h4>
+          </div>
+          <div class="carousel results-carousel">
+            <div class="item">
+              <div class="columns is-gapless">
+                <div class="column is-4">
+                  <video autoplay controls muted loop>
+                    <source src="static/video/human_hand_demo/fold_cloth.01.video.mp4" type="video/mp4">
+                  </video>
+                </div>
+                <div class="column is-8">
+                  <video class="is-flex is-flex-direction-row" autoplay controls muted loop>
+                    <source src="static/video/human_hand_demo/fold_cloth.01.mp4" type="video/mp4">
+                  </video>
+                </div>
+              </div>
+            </div>
+            <div class="item">
+              <div class="columns is-gapless">
+                <div class="column is-4">
+                  <video autoplay controls muted loop>
+                    <source src="static/video/human_hand_demo/fold_cloth.02.video.mp4" type="video/mp4">
+                  </video>
+                </div>
+                <div class="column is-8">
+                  <video class="is-flex is-flex-direction-row" autoplay controls muted loop>
+                    <source src="static/video/human_hand_demo/fold_cloth.02.mp4" type="video/mp4">
+                  </video>
+                </div>
+              </div>
+            </div>
+            <div class="item">
+              <div class="columns is-gapless">
+                <div class="column is-4">
+                  <video autoplay controls muted loop>
+                    <source src="static/video/human_hand_demo/fold_cloth.03.video.mp4" type="video/mp4">
+                  </video>
+                </div>
+                <div class="column is-8">
+                  <video class="is-flex is-flex-direction-row" autoplay controls muted loop>
+                    <source src="static/video/human_hand_demo/fold_cloth.03.mp4" type="video/mp4">
+                  </video>
+                </div>
+              </div>
+            </div>
+            <div class="item">
+              <div class="columns is-gapless">
+                <div class="column is-4">
+                  <video autoplay controls muted loop>
+                    <source src="static/video/human_hand_demo/fold_cloth.04.video.mp4" type="video/mp4">
+                  </video>
+                </div>
+                <div class="column is-8">
+                  <video class="is-flex is-flex-direction-row" autoplay controls muted loop>
+                    <source src="static/video/human_hand_demo/fold_cloth.04.mp4" type="video/mp4">
+                  </video>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="content has-text-justified">
+            <p>
+              <b>Caption:</b> Each visualization shows the human demonstration (left), the <b>RT-Trajectory</b> policy rollout (middle), and the trajectory sketch overlaid on the rollout (right).
+            </p>
+          </div>
         </div>
       </div>
 
-      <div class="has-text-centered">
-        <h3 class="title is-5">Pick</h3>
-      </div>
-      <div class="carousel results-carousel">
-        <div class="item">
-          <video autoplay muted loop>
-            <source src="static/video/human_hand_demo/pick_7up_can.01.mp4" type="video/mp4">
-          </video>
-          <video autoplay muted loop>
-            <source src="static/video/human_hand_demo/pick_7up_can.01.video.mp4" type="video/mp4">
-          </video>
-        </div>
-        <div class="item">
-          <video autoplay muted loop>
-            <source src="static/video/human_hand_demo/pick_apple.02.mp4" type="video/mp4">
-          </video>
-          <video autoplay muted loop>
-            <source src="static/video/human_hand_demo/pick_apple.02.video.mp4" type="video/mp4">
-          </video>
-        </div>
-        <div class="item">
-          <video autoplay muted loop>
-            <source src="static/video/human_hand_demo/pick_blue_chip_bag.03.mp4" type="video/mp4">
-          </video>
-          <video autoplay muted loop>
-            <source src="static/video/human_hand_demo/pick_blue_chip_bag.03.video.mp4" type="video/mp4">
-          </video>
-        </div>
-        <div class="item">
-          <video autoplay muted loop>
-            <source src="static/video/human_hand_demo/pick_brown_chip_bag.01.mp4" type="video/mp4">
-          </video>
-          <video autoplay muted loop>
-            <source src="static/video/human_hand_demo/pick_brown_chip_bag.01.video.mp4" type="video/mp4">
-          </video>
-        </div>
-        <div class="item">
-          <video autoplay muted loop>
-            <source src="static/video/human_hand_demo/pick_coke_can.02.mp4" type="video/mp4">
-          </video>
-          <video autoplay muted loop>
-            <source src="static/video/human_hand_demo/pick_coke_can.02.video.mp4" type="video/mp4">
-          </video>
-        </div>
-        <div class="item">
-          <video autoplay muted loop>
-            <source src="static/video/human_hand_demo/pick_green_can.03.mp4" type="video/mp4">
-          </video>
-          <video autoplay muted loop>
-            <source src="static/video/human_hand_demo/pick_green_can.03.video.mp4" type="video/mp4">
-          </video>
+      <div class="columns is-centered">
+        <div class="column is-four-fifths has-text-centered">
+          <div>
+            <h4 class="title is-5">Pick</h4>
+          </div>
+          <div class="carousel results-carousel">
+            <div class="item">
+              <div class="columns is-gapless">
+                <div class="column is-4">
+                  <video autoplay controls muted loop>
+                    <source src="static/video/human_hand_demo/pick_7up_can.01.video.mp4" type="video/mp4">
+                  </video>
+                </div>
+                <div class="column is-8">
+                  <video autoplay controls muted loop>
+                    <source src="static/video/human_hand_demo/pick_7up_can.01.mp4" type="video/mp4">
+                  </video>
+                </div>
+              </div>
+            </div>
+            <div class="item">
+              <div class="columns is-gapless">
+                <div class="column is-4">
+                  <video autoplay controls muted loop>
+                    <source src="static/video/human_hand_demo/pick_apple.02.video.mp4" type="video/mp4">
+                  </video>
+                </div>
+                <div class="column is-8">
+                  <video autoplay controls muted loop>
+                    <source src="static/video/human_hand_demo/pick_apple.02.mp4" type="video/mp4">
+                  </video>
+                </div>
+              </div>
+            </div>
+            <div class="item">
+              <div class="columns is-gapless">
+                <div class="column is-4">
+                  <video autoplay controls muted loop>
+                    <source src="static/video/human_hand_demo/pick_blue_chip_bag.03.video.mp4" type="video/mp4">
+                  </video>
+                </div>
+                <div class="column is-8">
+                  <video autoplay controls muted loop>
+                    <source src="static/video/human_hand_demo/pick_blue_chip_bag.03.mp4" type="video/mp4">
+                  </video>
+                </div>
+              </div>
+            </div>
+            <div class="item">
+              <div class="columns is-gapless">
+                <div class="column is-4">
+                  <video autoplay controls muted loop>
+                    <source src="static/video/human_hand_demo/pick_brown_chip_bag.01.video.mp4" type="video/mp4">
+                  </video>
+                </div>
+                <div class="column is-8">
+                  <video autoplay controls muted loop>
+                    <source src="static/video/human_hand_demo/pick_brown_chip_bag.01.mp4" type="video/mp4">
+                  </video>
+                </div>
+              </div>
+            </div>
+            <div class="item">
+              <div class="columns is-gapless">
+                <div class="column is-4">
+                  <video autoplay controls muted loop>
+                    <source src="static/video/human_hand_demo/pick_coke_can.02.video.mp4" type="video/mp4">
+                  </video>
+                </div>
+                <div class="column is-8">
+                  <video autoplay controls muted loop>
+                    <source src="static/video/human_hand_demo/pick_coke_can.02.mp4" type="video/mp4">
+                  </video>
+                </div>
+              </div>
+            </div>
+            <div class="item">
+              <div class="columns is-gapless">
+                <div class="column is-4">
+                  <video autoplay controls muted loop>
+                    <source src="static/video/human_hand_demo/pick_green_can.03.video.mp4" type="video/mp4">
+                  </video>
+                </div>
+                <div class="column is-8">
+                  <video autoplay controls muted loop>
+                    <source src="static/video/human_hand_demo/pick_green_can.03.mp4" type="video/mp4">
+                  </video>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="content has-text-justified">
+            <p>
+              <b>Caption:</b> Each visualization shows the human demonstration (left), the <b>RT-Trajectory</b> policy rollout (middle), and the trajectory sketch overlaid on the rollout (right).
+            </p>
+          </div>
         </div>
       </div>
     </div>
@@ -576,102 +733,164 @@
           <h2 class="title is-3">For Inference: Prompting LLMs with Code as Policies</h2>
           <div class="content has-text-justified">
             <p>
-              Example
+              We prompt an LLM to write code to generate trajectories given the task instructions and object labels for <span class="tt">Pick</span> and <span class="tt">Open Drawer</span>. After executing the code written by the LLM, we get a sequence of target robot waypoints which can then be processed into a trajectory sketch. 
+              <!-- In contrast with human video trajectories, LLM trajectories are designed to be executed by an IK planner and are therefore precise and linear. While they are also different from the hindsight trajectories found in the training data, <b>RT-Trajectory</b> is able to execute them correctly and outperform the IK planner in diverse pick task due to its ability to adapt motion to the scene nuances like orientation of the object. -->
             </p>
           </div>
         </div>
-  
       </div>
-      <div class="has-text-centered">
-        <h3 class="title is-5">Open Drawer</h3>
-      </div>
-      <div class="carousel results-carousel">
-        <div class="item">
-          <video autoplay muted loop>
-            <source src="static/video/cap/open_top_drawer_with_handle.01.mp4" type="video/mp4">
-          </video>
-          <img src="static/img/cap/open_top_drawer_with_handle.01.png" alt="open_top_drawer_with_handle" class="image">
-        </div>
-        <div class="item">
-          <video autoplay muted loop>
-            <source src="static/video/cap/open_top_drawer_with_handle.02.mp4" type="video/mp4">
-          </video>
-          <img src="static/img/cap/open_top_drawer_with_handle.02.png" alt="open_top_drawer_with_handle" class="image">
-        </div>
-        <div class="item">
-          <video autoplay muted loop>
-            <source src="static/video/cap/open_top_drawer_with_handle.03.mp4" type="video/mp4">
-          </video>
-          <img src="static/img/cap/open_top_drawer_with_handle.03.png" alt="open_top_drawer_with_handle" class="image">
-        </div>
-        <div class="item">
-          <video autoplay muted loop>
-            <source src="static/video/cap/open_top_drawer_with_handle.09.mp4" type="video/mp4">
-          </video>
-          <img src="static/img/cap/open_top_drawer_with_handle.09.png" alt="open_top_drawer_with_handle" class="image">
-        </div>
-        <div class="item">
-          <video autoplay muted loop>
-            <source src="static/video/cap/open_top_drawer_with_handle.10.mp4" type="video/mp4">
-          </video>
-          <img src="static/img/cap/open_top_drawer_with_handle.10.png" alt="open_top_drawer_with_handle" class="image">
+
+      <div class="columns is-centered">
+        <div class="column is-four-fifths has-text-centered">
+          <div class="content has-text-justified">
+            <p>
+              Take <span class="tt">Open Drawer</span> for example. We first detect the objects of interests (drawer handle) by a visual-language model (VLM). Then, we prompt GPT-4 to write code to generate trajectories given the task instructions (open the top drawer) and object poses as well as object sizes.
+            </p>
+          </div>
         </div>
       </div>
-    
-    <div class="has-text-centered">
-      <h3 class="title is-5">Pick</h3>
+
+      <div class="columns is-centered">
+        <div class="column is-3">
+          <div class="has-text-justified has-text-primary">Detection results</div>
+          <img src="static/img/cap/open_top_drawer_with_handle.01.resized.png" alt="open_top_drawer_with_handle" class="image">
+        </div>
+        <div class="column is-7">
+          <div class="has-text-justified has-text-primary">LLM output</div>
+          <pre><code class="python-html"># There are two drawer handles, and the top-most should be compared along the z-axis.
+# First handle has z-value of 0.63, second has z-value of 0.12.
+# The positive z direction corresponds to up, so the first handle is the top-most.
+top_drawer_handle_position =  objects['drawer handle'][0]['centroid_pose']['position']
+top_drawer_handle_orientation =  objects['drawer handle'][0]['centroid_pose']['orientation']
+top_drawer_handle_size = objects['drawer handle'][0]['size']
+# The handle has a bounding box size of [0.00 , 0.12 , 0.06] in meters and is located on the front x-y plane of the cabinet.
+# The gripper has a max span of 10 cm, the size of the handle along the y-axis is 0.12 so it can only grasp the handle with fingers aligned along the x axis and z axis.
+# A bottom grasp is ruled out since the robot would collide with the cabinet.
+# A back grasp is unfeasible since the robot is in front of the cabinet and cannot go around it to make a back grasp.
+# A top grasp with fingers aligned with the x-axis or z-axis is feasible.
+# A front grasp with fingers aligned with the z-axis and a side grasp with fingers aligned with the x-axis are feasible too.
+# We choose the front grasp with fingers aligned with the z-axis for simplicity.
+# Get quaternion corresponding to [-90, 0, -90] roll,pitch and yaw for a front grasp with fingers aligned with the z-axis.
+grasp_orientation_quaternion = robot_api.orientation_quaternion_from_euler(-90, 0, -90)
+# Calculate grasp position so object ends within gripper fingers.
+grasp_pose = {'position': top_drawer_handle_position, 'orientation': grasp_orientation_quaternion}
+# The pregrasp pose is the pose right before the grasp.
+# Since this is a front grasp, this means the gripper is pointing towards the positive x axis, so the pregrasp_pose has a negative x delta over the grasp pose.
+# Calculate pregrasp pose accounting for object size and gripper size (0.1 m).
+pregrasp_pose = {'position': grasp_pose['position'] + [-top_drawer_handle_size[0]/2 - 0.1, 0, 0], 'orientation': grasp_orientation_quaternion}
+# Open the gripper according to the z axis size of the handle plus a buffer of 2 cm.
+robot_api.gripper_open((top_drawer_handle_size[2] + 0.03)/0.1)
+robot_api.follow_arm_trajectory([pregrasp_pose, grasp_pose], allow_base_moves=True)
+robot_api.gripper_close()
+# handle pose is not valid anymore since we might have moved the base so we use the current arm pose.
+current_arm_pose = robot_api.get_arm_pose()
+# The handle is at the front of the cabinet. Opening means moving the object (handle) away from their reference (cabinet) along the x axis.
+# The cabinet is at x_cabinet = 1.12 and the handle is at x_handle = 0.69.
+# When the object coordinate is lower than its reference, to increase distance you need to substract a delta and to decrease distance  you need to add a delta.
+# When the object coordinate is greater than its reference, to increase distance you need to add a delta and to decrease distance  you need to substract a delta.
+# Since x_handle is lower than x_cabinet, it means the object coordinate is lower than its reference, so to increase the distance between the two we substract a positive delta to x_handle.
+open_drawer_pose = {'position': current_arm_pose['position'] + [-0.25, 0, 0], 'orientation': current_arm_pose['orientation']}
+# Allow for base moves for after grasp moves since arm could be in a difficult position to execute the open.
+robot_api.follow_arm_trajectory([open_drawer_pose], allow_base_moves=True)</code></pre>
+        </div>
+      </div>
+
+      <div class="columns is-centered">
+        <div class="column is-four-fifths has-text-centered">
+          <div>
+            <h3 class="title is-5">Open Drawer</h3>
+          </div>
+          <div class="carousel results-carousel">
+            <div class="item">
+              <video autoplay muted loop>
+                <source src="static/video/cap/open_top_drawer_with_handle.01.mp4" type="video/mp4">
+              </video>
+            </div>
+            <div class="item">
+              <video autoplay muted loop>
+                <source src="static/video/cap/open_top_drawer_with_handle.02.mp4" type="video/mp4">
+              </video>
+            </div>
+            <div class="item">
+              <video autoplay muted loop>
+                <source src="static/video/cap/open_top_drawer_with_handle.03.mp4" type="video/mp4">
+              </video>
+            </div>
+            <div class="item">
+              <video autoplay muted loop>
+                <source src="static/video/cap/open_top_drawer_with_handle.09.mp4" type="video/mp4">
+              </video>
+            </div>
+            <div class="item">
+              <video autoplay muted loop>
+                <source src="static/video/cap/open_top_drawer_with_handle.10.mp4" type="video/mp4">
+              </video>
+            </div>
+          </div>
+          <div class="content has-text-justified">
+            <p>
+              <b>Caption:</b> Each visualization shows the <b>RT-Trajectory</b> policy rollout (left), and the trajectory sketch overlaid on the rollout (right).
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div class="columns is-centered">
+        <div class="column is-four-fifths has-text-centered">
+          <div>
+            <h3 class="title is-5">Pick</h3>
+          </div>
+          <div class="carousel results-carousel">
+            <div class="item">
+              <video autoplay muted loop>
+                <source src="static/video/cap/pick_7up_can.02.mp4" type="video/mp4">
+              </video>
+            </div>
+            <div class="item">
+              <video autoplay muted loop>
+                <source src="static/video/cap/pick_apple.02.mp4" type="video/mp4">
+              </video>
+            </div>
+            <div class="item">
+              <video autoplay muted loop>
+                <source src="static/video/cap/pick_blue_chip_bag.02.mp4" type="video/mp4">
+              </video>
+            </div>
+            <div class="item">
+              <video autoplay muted loop>
+                <source src="static/video/cap/pick_blue_protein_bar.02.mp4" type="video/mp4">
+              </video>
+            </div>
+            <div class="item">
+              <video autoplay muted loop>
+                <source src="static/video/cap/pick_green_chip_bag.02.mp4" type="video/mp4">
+              </video>
+            </div>
+            <div class="item">
+              <video autoplay muted loop>
+                <source src="static/video/cap/pick_orange_can.01.mp4" type="video/mp4">
+              </video>
+            </div>
+            <div class="item">
+              <video autoplay muted loop>
+                <source src="static/video/cap/pick_redbull_can.01.mp4" type="video/mp4">
+              </video>
+            </div>
+            <div class="item">
+              <video autoplay muted loop>
+                <source src="static/video/cap/pick_water_bottle.02.mp4" type="video/mp4">
+              </video>
+            </div>
+          </div>
+          <div class="content has-text-justified">
+            <p>
+              <b>Caption:</b> Each visualization shows the <b>RT-Trajectory</b> policy rollout (left), and the trajectory sketch overlaid on the rollout (right).
+            </p>
+          </div>
+        </div>
+      </div>
     </div>
-    <div class="carousel results-carousel">
-      <div class="item">
-        <video autoplay muted loop>
-          <source src="static/video/cap/pick_7up_can.02.mp4" type="video/mp4">
-        </video>
-        <img src="static/img/cap/pick_7up_can.02.png" alt="pick_7up_can" class="image">
-      </div>
-      <div class="item">
-        <video autoplay muted loop>
-          <source src="static/video/cap/pick_apple.02.mp4" type="video/mp4">
-        </video>
-        <img src="static/img/cap/pick_apple.02.png" alt="pick_apple" class="image">
-      </div>
-      <div class="item">
-        <video autoplay muted loop>
-          <source src="static/video/cap/pick_blue_chip_bag.02.mp4" type="video/mp4">
-        </video>
-        <img src="static/img/cap/pick_blue_chip_bag.02.png" alt="pick_blue_chip_bag" class="image">
-      </div>
-      <div class="item">
-        <video autoplay muted loop>
-          <source src="static/video/cap/pick_blue_protein_bar.02.mp4" type="video/mp4">
-        </video>
-        <img src="static/img/cap/pick_blue_protein_bar.02.png" alt="pick_blue_protein_bar" class="image">
-      </div>
-      <div class="item">
-        <video autoplay muted loop>
-          <source src="static/video/cap/pick_green_chip_bag.02.mp4" type="video/mp4">
-        </video>
-        <img src="static/img/cap/pick_green_chip_bag.02.png" alt="pick_green_chip_bag" class="image">
-      </div>
-      <div class="item">
-        <video autoplay muted loop>
-          <source src="static/video/cap/pick_orange_can.01.mp4" type="video/mp4">
-        </video>
-        <img src="static/img/cap/pick_orange_can.01.png" alt="pick_orange_can" class="image">
-      </div>
-      <div class="item">
-        <video autoplay muted loop>
-          <source src="static/video/cap/pick_redbull_can.01.mp4" type="video/mp4">
-        </video>
-        <img src="static/img/cap/pick_redbull_can.01.png" alt="pick_redbull_can" class="image">
-      </div>
-      <div class="item">
-        <video autoplay muted loop>
-          <source src="static/video/cap/pick_water_bottle.02.mp4" type="video/mp4">
-        </video>
-        <img src="static/img/cap/pick_water_bottle.02.png" alt="pick_water_bottle" class="image">
-      </div>
-    </div>
-    </div>
+
   </section>
 
   <section class="section">
@@ -681,55 +900,62 @@
           <h2 class="title is-3">For Inference: Image Generation Models</h2>
           <div class="content has-text-justified">
             <p>
-              
+              In our work, we use a PaLM-E style model that generates vector-quantized tokens derived from ViT-VQGAN that represent the trajectory image. Once detokenized, the resulting image can be used to condition <b>RT-Trajectory</b>.
             </p>
           </div>
-        </div>
-      </div>
 
-      <div class="has-text-centered">
-        <h3 class="title is-5">Examples</h3>
-      </div>
-      <div class="carousel results-carousel">
-        <div class="item">
-          <video autoplay muted loop>
-            <source src="static/video/image_generation/open_middle_drawer.00.mp4" type="video/mp4">
-          </video>
-        </div>
-        <div class="item">
-          <video autoplay muted loop>
-            <source src="static/video/image_generation/pick_orange_can_from_top_drawer_and_place_on_counter.00.mp4" type="video/mp4">
-          </video>
-        </div>
-        <div class="item">
-          <video autoplay muted loop>
-            <source src="static/video/image_generation/place_orange_into_middle_drawer.01.mp4" type="video/mp4">
-          </video>
-        </div>
-        <div class="item">
-          <video autoplay muted loop>
-            <source src="static/video/image_generation/pick_green_jalapeno_chip_bag.02.mp4" type="video/mp4">
-          </video>
-        </div>
-        <div class="item">
-          <video autoplay muted loop>
-            <source src="static/video/image_generation/move_7up_can_near_blue_plastic_bottle.00.mp4" type="video/mp4">
-          </video>
-        </div>
-        <div class="item">
-          <video autoplay muted loop>
-            <source src="static/video/image_generation/move_apple_near_green_jalapeno_chip_bag.00.mp4" type="video/mp4">
-          </video>
-        </div>
-        <div class="item">
-          <video autoplay muted loop>
-            <source src="static/video/image_generation/move_blue_plastic_bottle_near_pepsi_can.00.mp4" type="video/mp4">
-          </video>
-        </div>
-        <div class="item">
-          <video autoplay muted loop>
-            <source src="static/video/image_generation/move_redbull_can_near_sponge.00.mp4" type="video/mp4">
-          </video>
+          <div class="content has-text-justified">Here we showcase some qualitative results. Each visualization shows the <b>RT-Trajectory</b> policy rollout (left), and the trajectory sketch overlaid on the rollout (right). The corresponding language instruction are shown below the video.</div>
+
+          <div class="carousel results-carousel">
+            <div class="item">
+              <video autoplay muted loop>
+                <source src="static/video/image_generation/open_middle_drawer.00.mp4" type="video/mp4">
+              </video>
+              <div class="content is-size-6 has-text-centered">open middle drawer</div>
+            </div>
+            <div class="item">
+              <video autoplay muted loop>
+                <source src="static/video/image_generation/pick_orange_can_from_top_drawer_and_place_on_counter.00.mp4" type="video/mp4">
+              </video>
+              <div class="content is-size-6 has-text-centered">pick orange can from top drawer and place on counter</div>
+            </div>
+            <div class="item">
+              <video autoplay muted loop>
+                <source src="static/video/image_generation/place_orange_into_middle_drawer.01.mp4" type="video/mp4">
+              </video>
+              <div class="content is-size-6 has-text-centered">place orange into middle drawer</div>
+            </div>
+            <div class="item">
+              <video autoplay muted loop>
+                <source src="static/video/image_generation/pick_green_jalapeno_chip_bag.02.mp4" type="video/mp4">
+              </video>
+              <div class="content is-size-6 has-text-centered">pick green jalapeno chip bag</div>
+            </div>
+            <div class="item">
+              <video autoplay muted loop>
+                <source src="static/video/image_generation/move_7up_can_near_blue_plastic_bottle.00.mp4" type="video/mp4">
+              </video>
+              <div class="content is-size-6 has-text-centered">move 7up can near blue plastic bottle</div>
+            </div>
+            <div class="item">
+              <video autoplay muted loop>
+                <source src="static/video/image_generation/move_apple_near_green_jalapeno_chip_bag.00.mp4" type="video/mp4">
+              </video>
+              <div class="content is-size-6 has-text-centered">move apple near green jalapeno chip bag</div>
+            </div>
+            <div class="item">
+              <video autoplay muted loop>
+                <source src="static/video/image_generation/move_blue_plastic_bottle_near_pepsi_can.00.mp4" type="video/mp4">
+              </video>
+              <div class="content is-size-6 has-text-centered">move blue plastic bottle near pepsi can</div>
+            </div>
+            <div class="item">
+              <video autoplay muted loop>
+                <source src="static/video/image_generation/move_redbull_can_near_sponge.00.mp4" type="video/mp4">
+              </video>
+              <div class="content is-size-6 has-text-centered">move redbull can near sponge</div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -739,11 +965,20 @@
     <div class="container is-max-desktop">
       <div class="columns is-centered">
         <div class="column is-four-fifths has-text-centered">
-          <h2 class="title is-3">Case Studies: Retry Behaviors</h2>
+          <h2 class="title is-3">Case Studies</h2>
+        </div>
+      </div>
+
+      <div class="columns is-centered">
+        <div class="column is-four-fifths has-text-centered">
+          <h3 class="subtitle is-4">Retry Behaviors</h3>
           <div class="content has-text-justified">
             <p>
-              
+              Compared to non-learning methods, <b>RT-Trajectory</b> is able to recover from execution failures. The retry behavior emerged when <b>RT-Trajectory</b> was opening the drawer given the trajectory sketch generated by the Code as Policies. After a failure attempt to open the drawer by its handle, the robot retried to grasp the edge of the drawer, and managed to pull the drawer.
             </p>
+          </div>
+          <div class="content has-text-justified">
+            Below we show two example rollouts that illustrate retry behaviors. Each visualization shows the <b>RT-Trajectory</b> policy rollout (left), and the trajectory sketch overlaid on the rollout (right).
           </div>
           <video autoplay muted loop>
             <source src="static/video/retry/open_top_drawer_with_handle.01.mp4" type="video/mp4">
@@ -753,20 +988,34 @@
           </video>
         </div>
       </div>
+
       <div class="columns is-centered">
         <div class="column is-four-fifths has-text-centered">
-          <h2 class="title is-3">Case Studies: Height-aware</h2>
+          <h3 class="subtitle is-4">Height-aware Behaviors</h3>
           <div class="content has-text-justified">
             <p>
-              
+              2D trajectories (without depth information) are visually ambiguous for distinguishing whether the robot should move its arm to a deeper or higher.  We find that height-aware color grading for <b>RT-Trajectory (2.5D)</b> can effectively help reduce such ambiguity.
             </p>
           </div>
+        </div>
+      </div>
+        
+      <div class="columns is-centered is-multiline">
+        <div class="column is-four-fifths has-text-centered">
           <video autoplay muted loop>
             <source src="static/video/height_aware/pick_blue_protein_bar.02.plain.mp4" type="video/mp4">
           </video>
+          <div class="cotent">
+            <b>RT-Trajectory (2D)</b> moves the object to a deeper position due to the ambiguity of a 2D trajectory.
+          </div>
+        </div>
+        <div class="column is-four-fifths has-text-centered">
           <video autoplay muted loop>
             <source src="static/video/height_aware/pick_blue_protein_bar.02.height-aware.mp4" type="video/mp4">
           </video>
+          <div class="cotent">
+            <b>RT-Trajectory (2.5D)</b> lifts the object.
+          </div>
         </div>
       </div>
     </div>
@@ -776,93 +1025,93 @@
     <div class="container is-max-desktop">
       <div class="columns is-centered">
         <div class="column is-four-fifths has-text-centered">
-          <h2 class="title is-3">Emergent Capabilities</h2>
+          <h2 class="title is-3">More Qualitative Results</h2>
           <div class="content has-text-justified">
             <p>
-              
+              As a qualitative case study, we evaluate <b>RT-Trajectory</b> in 2 new buildings in 4 realistic novel rooms which contain entirely new backgrounds, lighting conditions, objects, layouts, and furniture geometries. With little to moderate trajectory prompt engineering, we find that <b>RT-Trajectory</b> is able to successfully perform a variety of tasks requiring novel motion generalization and robustness to out-of-distribution visual distribution shifts.
             </p>
           </div>
         </div>
       </div>
 
-      <div class="has-text-centered">
-        <h3 class="title is-5">Examples</h3>
-      </div>
       <div class="carousel results-carousel">
         <div class="item">
           <video autoplay muted loop>
-            <source src="static/video/emergent_capabilities/open_cabinet.mp4" type="video/mp4">
+            <source src="static/video/emergent_capabilities/kitchen_move_pan_to_stove.mp4" type="video/mp4">
           </video>
-        </div>
-        <div class="item">
-          <video autoplay muted loop>
-            <source src="static/video/emergent_capabilities/lift_the_lid_of_the_pumpkin_basket.mp4" type="video/mp4">
-          </video>
-        </div>
-        <div class="item">
-          <video autoplay muted loop>
-            <source src="static/video/emergent_capabilities/clean_table_scene_1.00.03.20230919_170137.mp4" type="video/mp4">
-          </video>
-        </div>
-        <div class="item">
-          <video autoplay muted loop>
-            <source src="static/video/emergent_capabilities/clean_table_scene_2.00.03.20230919_171039.mp4" type="video/mp4">
-          </video>
-        </div>
-        <div class="item">
-          <video autoplay muted loop>
-            <source src="static/video/emergent_capabilities/clean_table_scene_3.00.01.20230919_171832.mp4" type="video/mp4">
-          </video>
-        </div>
-        <div class="item">
-          <video autoplay muted loop>
-            <source src="static/video/emergent_capabilities/living_room_pick_remote2.mp4" type="video/mp4">
-          </video>
-        </div>
-        <div class="item">
-          <video autoplay muted loop>
-            <source src="static/video/emergent_capabilities/place_remote_in_wood_drawer.mp4" type="video/mp4">
-          </video>
-        </div>
-        <div class="item">
-          <video autoplay muted loop>
-            <source src="static/video/emergent_capabilities/close_wood_drawer.mp4" type="video/mp4">
-          </video>
-        </div>
-        <div class="item">
-          <video autoplay muted loop>
-            <source src="static/video/emergent_capabilities/pick_toothpaste.mp4" type="video/mp4">
-          </video>
-        </div>
-        <div class="item">
-          <video autoplay muted loop>
-            <source src="static/video/emergent_capabilities/pick_toothbrush.mp4" type="video/mp4">
-          </video>
-        </div>
-        <div class="item">
-          <video autoplay muted loop>
-            <source src="static/video/emergent_capabilities/living_room_pick_remote2.mp4" type="video/mp4">
-          </video>
+          <div class="content is-size-6 has-text-centered">Move a pan onto the stove in an unseen kitchen</div>
         </div>
         <div class="item">
           <video autoplay muted loop>
             <source src="static/video/emergent_capabilities/open_cabinet.mp4" type="video/mp4">
           </video>
+          <div class="content is-size-6 has-text-centered">Open cabinet door in an unseen kitchen</div>
         </div>
         <div class="item">
           <video autoplay muted loop>
             <source src="static/video/emergent_capabilities/close_cabinet.mp4" type="video/mp4">
           </video>
+          <div class="content is-size-6 has-text-centered">Close the cabinet door in an unseen kitchen</div>
         </div>
         <div class="item">
           <video autoplay muted loop>
-            <source src="static/video/emergent_capabilities/kitchen_move_pan_to_stove.mp4" type="video/mp4">
+            <source src="static/video/emergent_capabilities/living_room_pick_remote2.mp4" type="video/mp4">
           </video>
+          <div class="content is-size-6 has-text-centered">Pick the remote from a low desk in an unseen living room</div>
+        </div>
+        <div class="item">
+          <video autoplay muted loop>
+            <source src="static/video/emergent_capabilities/place_remote_in_wood_drawer.mp4" type="video/mp4">
+          </video>
+          <div class="content is-size-6 has-text-centered">Place the remote into the wooden drawer in an unseen living room</div>
+        </div>
+        <div class="item">
+          <video autoplay muted loop>
+            <source src="static/video/emergent_capabilities/close_wood_drawer.mp4" type="video/mp4">
+          </video>
+          <div class="content is-size-6 has-text-centered">Close the wooden drawer in an unseen living room</div>
+        </div>
+        <div class="item">
+          <video autoplay muted loop>
+            <source src="static/video/emergent_capabilities/pick_toothpaste.mp4" type="video/mp4">
+          </video>
+          <div class="content is-size-6 has-text-centered">Pick a toothpaste in an unseen bathroom</div>
+        </div>
+        <div class="item">
+          <video autoplay muted loop>
+            <source src="static/video/emergent_capabilities/pick_toothbrush.mp4" type="video/mp4">
+          </video>
+          <div class="content is-size-6 has-text-centered">Pick a toothbrush in an unseen bathroom</div>
         </div>
         <div class="item">
           <video autoplay muted loop>
             <source src="static/video/emergent_capabilities/dining_room_move_cup.mp4" type="video/mp4">
           </video>
+          <div class="content is-size-6 has-text-centered">Move the cup in an unseen dining room</div>
+        </div>
+        <div class="item">
+          <video autoplay muted loop>
+            <source src="static/video/emergent_capabilities/lift_the_lid_of_the_pumpkin_basket.mp4" type="video/mp4">
+          </video>
+          <div class="content is-size-6 has-text-centered">Lift the lid of the pumpkin basket</div>
+        </div>
+        <div class="item">
+          <video autoplay muted loop>
+            <source src="static/video/emergent_capabilities/clean_table_scene_1.00.03.20230919_170137.mp4" type="video/mp4">
+          </video>
+          <div class="content is-size-6 has-text-centered">Clean the table with a sponge, following "M"</div>
+        </div>
+        <div class="item">
+          <video autoplay muted loop>
+            <source src="static/video/emergent_capabilities/clean_table_scene_2.00.03.20230919_171039.mp4" type="video/mp4">
+          </video>
+          <div class="content is-size-6 has-text-centered">Clean the table with a towel, following "M"</div>
+        </div>
+        <div class="item">
+          <video autoplay muted loop>
+            <source src="static/video/emergent_capabilities/clean_table_scene_3.00.01.20230919_171832.mp4" type="video/mp4">
+          </video>
+          <div class="content is-size-6 has-text-centered">Clean the table with a duster, following "Z"</div>
         </div>
       </div>
     </div>
@@ -884,10 +1133,14 @@
 
   <script>
     bulmaCarousel.attach('.carousel', {
-      slidesToShow: 2,
-      pagination: false
+      slidesToShow: 1,
+      pagination: false,
+      loop: true,
+      autoplay: true,
+      autoplaySpeed: 8000,
     });
   </script>
+  <script>hljs.highlightAll();</script>
 </body>
 
 </html>
