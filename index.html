@@ -74,17 +74,18 @@
     <div class="container is-max-desktop">
       <h2 class="title is-3 has-text-centered">For Training: Hindsight Trajectory Labels</h2>
       <div class="columns is-centered">
-        <div class="column has-text-centered">
+        <div class="column is-5 has-text-centered">
           <h3 class="subtitle is-4">2D Trajectory + Interaction Markers</h2>
           <div class="content has-text-justified">
             <p>
-              For each episode in the dataset of demonstrations, we extract a 2D trajectory of robot end-effector center points. Concretely, given the proprioceptive information recorded in the episode, we obtain the 3D position of the robot end-effector center defined in the robot base frame at each time step, and project it to the camera space given the known camera extrinsic and intrinsic parameters. We assume that the robot base and camera do not move within the episode, which is common for stationary manipulation. Given a 2D trajectory (a sequence of pixel positions), we draw a curve on a blank image, by connecting 2D robot end-effector center points at adjacent time steps through straight lines.
-              <br>
+              For each episode in the dataset of demonstrations, we extract a 2D trajectory of robot end-effector center points. Concretely, given the proprioceptive information recorded in the episode, we obtain the 3D position of the robot end-effector center defined in the robot base frame at each time step, and project it to the camera space given the known camera extrinsic and intrinsic parameters. 
+              <!-- We assume that the robot base and camera do not move within the episode, which is common for stationary manipulation.  -->
+              Given a 2D trajectory (a sequence of pixel positions), we draw a curve on a blank image, by connecting 2D robot end-effector center points at adjacent time steps through straight lines.
               We draw green (or blue) circles at the 2D robot tool center points of all key time steps for closing (or opening) the gripper. 
             </p>
           </div>
         </div>
-        <div class="column">
+        <div class="column is-5">
           <video autoplay controls muted loop>
             <source src="static/video/hindsight_trajectory_labels/trajectory-label-basic.mp4" type="video/mp4">
           </video>
@@ -94,7 +95,7 @@
       
       <h3 class="subtitle is-4 has-text-centered">Color Grading</h3>
       <div class="columns is-centered">
-        <div class="column">
+        <div class="column is-5">
           <video autoplay controls muted loop>
             <source src="static/video/hindsight_trajectory_labels/trajectory-label-time-aware.mp4" type="video/mp4">
           </video>
@@ -102,7 +103,7 @@
             To express relative temporal motion, which encodes such as velocity and direction, we also explore using the red channel of the trajectory image to specify the normalized time step.
           </div>
         </div>
-        <div class="column">
+        <div class="column is-5">
           <video autoplay controls muted loop>
             <source src="static/video/hindsight_trajectory_labels/trajectory-label-height-aware.mp4" type="video/mp4">
           </video>
@@ -114,18 +115,18 @@
 
       <h3 class="subtitle is-4 has-text-centered">Trajectory Representations</h2>
       <div class="columns is-centered">
-        <div class="column">
+        <div class="column is-four-fifths">
           We propose two forms of trajectory representation from different combinations of the basic elements: <b>RT-Trajectory (2D)</b> and <b>RT-Trajectory (2.5D)</b>. Here are two example trajectory sketches.
         </div>
       </div>
       <div class="columns is-centered">
-        <div class="column">
+        <div class="column is-5">
           <img src="static/img/trajectory_representation_2d.png" alt="RT-Trajectory(2D)" class="image">
           <div class="content">
             <b>RT-Trajectory (2D)</b>: 2D trajectory with temporal information and interaction markers.
           </div>
         </div>
-        <div class="column">
+        <div class="column is-5">
           <img src="static/img/trajectory_representation_2_5d.png" alt="RT-Trajectory(2.5D)" class="image">
           <div class="content">
             <b>RT-Trajectory (2.5D)</b>: <b>RT-Trajectory (2D)</b> + height information.
@@ -137,59 +138,63 @@
     <div class="container is-max-desktop">
       <h3 class="subtitle is-4 has-text-centered">Seen Skills</h2>
       <div class="columns is-centered">
-        <div class="column">
+        <div class="column is-four-fifths">
           We use the <a href="https://robotics-transformer1.github.io/">RT-1</a> demonstration dataset for training, which contains 542 instructions inspired by an office kitchen setting. The language instructions consist of 8 different manipulation skills operating on a set of 17 household kitchen items; in total, the dataset consists of 73,334 real robot demonstrations across these 542 seen tasks, which were collected by manual teleoperation.
         </div>
       </div>
-      <div>Here are example rollouts of these skills. The corresponding language instruction are shown below the video.</div>
-      <div class="carousel results-carousel">
-        <div class="item">
-          <video autoplay controls muted loop>
-            <source src="static/video/hindsight_trajectory_labels/pick orange can.mp4" type="video/mp4">
-          </video>
-          <div class="content is-size-6 has-text-centered">pick orange can</div>
-        </div>
-        <div class="item">
-          <video autoplay controls muted loop>
-            <source src="static/video/hindsight_trajectory_labels/move pepsi can near 7up can.mp4" type="video/mp4">
-          </video>
-          <div class="content is-size-6 has-text-centered">move pepsi can near 7up can</div>
-        </div>
-        <div class="item">
-          <video autoplay controls muted loop>
-            <source src="static/video/hindsight_trajectory_labels/knock orange can over.mp4" type="video/mp4">
-          </video>
-          <div class="content is-size-6 has-text-centered">knock orange can over</div>
-        </div>
-        <div class="item">
-          <video autoplay controls muted loop>
-            <source src="static/video/hindsight_trajectory_labels/place pepsi can upright.mp4" type="video/mp4">
-          </video>
-          <div class="content is-size-6 has-text-centered">place pepsi can upright</div>
-        </div>
-        <div class="item">
-          <video autoplay controls muted loop>
-            <source src="static/video/hindsight_trajectory_labels/pick apple from middle drawer and place on counter.mp4" type="video/mp4">
-          </video>
-          <div class="content is-size-6 has-text-centered">pick apple from middle drawer and place on counter</div>
-        </div>
-        <div class="item">
-          <video autoplay controls muted loop>
-            <source src="static/video/hindsight_trajectory_labels/place pepsi can into top drawer.mp4" type="video/mp4">
-          </video>
-          <div class="content is-size-6 has-text-centered">place pepsi can into top drawer</div>
-        </div>
-        <div class="item">
-          <video autoplay controls muted loop>
-            <source src="static/video/hindsight_trajectory_labels/open bottom drawer.mp4" type="video/mp4">
-          </video>
-          <div class="content is-size-6 has-text-centered">open bottom drawer</div>
-        </div>
-        <div class="item">
-          <video autoplay controls muted loop>
-            <source src="static/video/hindsight_trajectory_labels/close middle drawer.mp4" type="video/mp4">
-          </video>
-          <div class="content is-size-6 has-text-centered">close middle drawer</div>
+      <div class="columns is-centered">
+        <div class="column is-four-fifths">
+          <div>Here are example rollouts of these skills. The corresponding language instruction are shown below the video.</div>
+          <div class="carousel results-carousel">
+            <div class="item">
+              <video autoplay controls muted loop>
+                <source src="static/video/hindsight_trajectory_labels/pick orange can.mp4" type="video/mp4">
+              </video>
+              <div class="content is-size-6 has-text-centered">pick orange can</div>
+            </div>
+            <div class="item">
+              <video autoplay controls muted loop>
+                <source src="static/video/hindsight_trajectory_labels/move pepsi can near 7up can.mp4" type="video/mp4">
+              </video>
+              <div class="content is-size-6 has-text-centered">move pepsi can near 7up can</div>
+            </div>
+            <div class="item">
+              <video autoplay controls muted loop>
+                <source src="static/video/hindsight_trajectory_labels/knock orange can over.mp4" type="video/mp4">
+              </video>
+              <div class="content is-size-6 has-text-centered">knock orange can over</div>
+            </div>
+            <div class="item">
+              <video autoplay controls muted loop>
+                <source src="static/video/hindsight_trajectory_labels/place pepsi can upright.mp4" type="video/mp4">
+              </video>
+              <div class="content is-size-6 has-text-centered">place pepsi can upright</div>
+            </div>
+            <div class="item">
+              <video autoplay controls muted loop>
+                <source src="static/video/hindsight_trajectory_labels/pick apple from middle drawer and place on counter.mp4" type="video/mp4">
+              </video>
+              <div class="content is-size-6 has-text-centered">pick apple from middle drawer and place on counter</div>
+            </div>
+            <div class="item">
+              <video autoplay controls muted loop>
+                <source src="static/video/hindsight_trajectory_labels/place pepsi can into top drawer.mp4" type="video/mp4">
+              </video>
+              <div class="content is-size-6 has-text-centered">place pepsi can into top drawer</div>
+            </div>
+            <div class="item">
+              <video autoplay controls muted loop>
+                <source src="static/video/hindsight_trajectory_labels/open bottom drawer.mp4" type="video/mp4">
+              </video>
+              <div class="content is-size-6 has-text-centered">open bottom drawer</div>
+            </div>
+            <div class="item">
+              <video autoplay controls muted loop>
+                <source src="static/video/hindsight_trajectory_labels/close middle drawer.mp4" type="video/mp4">
+              </video>
+              <div class="content is-size-6 has-text-centered">close middle drawer</div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -233,37 +238,37 @@
           <div class="carousel results-carousel">
             <div class="item">
               <video autoplay controls muted loop>
-                <source src="static/video/human_drawing/rt-traj-2.5d/place_fruit_scene_1.00.01.mp4" type="video/mp4">
+                <source src="static/video/human_drawing/rt_traj_2_5d/place_fruit_scene_1.00.01.mp4" type="video/mp4">
               </video>
             </div>
             <div class="item">
               <video autoplay controls muted loop>
-                <source src="static/video/human_drawing/rt-traj-2.5d/place_fruit_scene_1.02.01.mp4" type="video/mp4">
+                <source src="static/video/human_drawing/rt_traj_2_5d/place_fruit_scene_1.02.01.mp4" type="video/mp4">
               </video>
             </div>
             <div class="item">
               <video autoplay controls muted loop>
-                <source src="static/video/human_drawing/rt-traj-2.5d/place_fruit_scene_1.03.01.mp4" type="video/mp4">
+                <source src="static/video/human_drawing/rt_traj_2_5d/place_fruit_scene_1.03.01.mp4" type="video/mp4">
               </video>
             </div>
             <div class="item">
               <video autoplay controls muted loop>
-                <source src="static/video/human_drawing/rt-traj-2.5d/place_fruit_scene_2.01.01.mp4" type="video/mp4">
+                <source src="static/video/human_drawing/rt_traj_2_5d/place_fruit_scene_2.01.01.mp4" type="video/mp4">
               </video>
             </div>
             <div class="item">
               <video autoplay controls muted loop>
-                <source src="static/video/human_drawing/rt-traj-2.5d/place_fruit_scene_3.01.01.mp4" type="video/mp4">
+                <source src="static/video/human_drawing/rt_traj_2_5d/place_fruit_scene_3.01.01.mp4" type="video/mp4">
               </video>
             </div>
             <div class="item">
               <video autoplay controls muted loop>
-                <source src="static/video/human_drawing/rt-traj-2.5d/place_fruit_scene_3.02.01.mp4" type="video/mp4">
+                <source src="static/video/human_drawing/rt_traj_2_5d/place_fruit_scene_3.02.01.mp4" type="video/mp4">
               </video>
             </div>
             <div class="item">
               <video autoplay controls muted loop>
-                <source src="static/video/human_drawing/rt-traj-2.5d/place_fruit_scene_3.03.01.mp4" type="video/mp4">
+                <source src="static/video/human_drawing/rt_traj_2_5d/place_fruit_scene_3.03.01.mp4" type="video/mp4">
               </video>
             </div>
           </div>
@@ -281,32 +286,32 @@
           <div class="carousel results-carousel">
             <div class="item">
               <video autoplay controls muted loop>
-                <source src="static/video/human_drawing/rt-traj-2.5d/upright_and_move_scene_1.00.01.mp4" type="video/mp4">
+                <source src="static/video/human_drawing/rt_traj_2_5d/upright_and_move_scene_1.00.01.mp4" type="video/mp4">
               </video>
             </div>
             <div class="item">
               <video autoplay controls muted loop>
-                <source src="static/video/human_drawing/rt-traj-2.5d/upright_and_move_scene_1.01.01.mp4" type="video/mp4">
+                <source src="static/video/human_drawing/rt_traj_2_5d/upright_and_move_scene_1.01.01.mp4" type="video/mp4">
               </video>
             </div>
             <div class="item">
               <video autoplay controls muted loop>
-                <source src="static/video/human_drawing/rt-traj-2.5d/upright_and_move_scene_1.02.01.mp4" type="video/mp4">
+                <source src="static/video/human_drawing/rt_traj_2_5d/upright_and_move_scene_1.02.01.mp4" type="video/mp4">
               </video>
             </div>
             <div class="item">
               <video autoplay controls muted loop>
-                <source src="static/video/human_drawing/rt-traj-2.5d/upright_and_move_scene_1.03.01.mp4" type="video/mp4">
+                <source src="static/video/human_drawing/rt_traj_2_5d/upright_and_move_scene_1.03.01.mp4" type="video/mp4">
               </video>
             </div>
             <div class="item">
               <video autoplay controls muted loop>
-                <source src="static/video/human_drawing/rt-traj-2.5d/upright_and_move_scene_1.04.01.mp4" type="video/mp4">
+                <source src="static/video/human_drawing/rt_traj_2_5d/upright_and_move_scene_1.04.01.mp4" type="video/mp4">
               </video>
             </div>
             <div class="item">
               <video autoplay controls muted loop>
-                <source src="static/video/human_drawing/rt-traj-2.5d/upright_and_move_scene_1.05.01.mp4" type="video/mp4">
+                <source src="static/video/human_drawing/rt_traj_2_5d/upright_and_move_scene_1.05.01.mp4" type="video/mp4">
               </video>
             </div>
           </div>
@@ -324,27 +329,27 @@
           <div class="carousel results-carousel">
             <div class="item">
               <video autoplay controls muted loop>
-                <source src="static/video/human_drawing/rt-traj-2.5d/move_at_drawer_scene_1.00.01.mp4" type="video/mp4">
+                <source src="static/video/human_drawing/rt_traj_2_5d/move_at_drawer_scene_1.00.01.mp4" type="video/mp4">
               </video>
             </div>
             <div class="item">
               <video autoplay controls muted loop>
-                <source src="static/video/human_drawing/rt-traj-2.5d/move_at_drawer_scene_1.01.01.mp4" type="video/mp4">
+                <source src="static/video/human_drawing/rt_traj_2_5d/move_at_drawer_scene_1.01.01.mp4" type="video/mp4">
               </video>
             </div>
             <div class="item">
               <video autoplay controls muted loop>
-                <source src="static/video/human_drawing/rt-traj-2.5d/move_at_drawer_scene_1.02.01.mp4" type="video/mp4">
+                <source src="static/video/human_drawing/rt_traj_2_5d/move_at_drawer_scene_1.02.01.mp4" type="video/mp4">
               </video>
             </div>
             <div class="item">
               <video autoplay controls muted loop>
-                <source src="static/video/human_drawing/rt-traj-2.5d/move_at_drawer_scene_1.04.01.mp4" type="video/mp4">
+                <source src="static/video/human_drawing/rt_traj_2_5d/move_at_drawer_scene_1.04.01.mp4" type="video/mp4">
               </video>
             </div>
             <div class="item">
               <video autoplay controls muted loop>
-                <source src="static/video/human_drawing/rt-traj-2.5d/move_at_drawer_scene_1.05.01.mp4" type="video/mp4">
+                <source src="static/video/human_drawing/rt_traj_2_5d/move_at_drawer_scene_1.05.01.mp4" type="video/mp4">
               </video>
             </div>
           </div>
@@ -362,64 +367,64 @@
           <div class="carousel results-carousel">
             <div class="item">
               <video autoplay controls muted loop>
-                <source src="static/video/human_drawing/rt-traj-2.5d/restock_drawer_scene_1.00.01.mp4" type="video/mp4">
+                <source src="static/video/human_drawing/rt_traj_2_5d/restock_drawer_scene_1.00.01.mp4" type="video/mp4">
               </video>
             </div>
             <div class="item">
               <video autoplay controls muted loop>
-                <source src="static/video/human_drawing/rt-traj-2.5d/restock_drawer_scene_1.01.01.mp4" type="video/mp4">
+                <source src="static/video/human_drawing/rt_traj_2_5d/restock_drawer_scene_1.01.01.mp4" type="video/mp4">
               </video>
             </div>
             <div class="item">
               <video autoplay controls muted loop>
-                <source src="static/video/human_drawing/rt-traj-2.5d/restock_drawer_scene_1.02.01.mp4" type="video/mp4">
+                <source src="static/video/human_drawing/rt_traj_2_5d/restock_drawer_scene_1.02.01.mp4" type="video/mp4">
               </video>
             </div>
             <div class="item">
               <video autoplay controls muted loop>
-                <source src="static/video/human_drawing/rt-traj-2.5d/restock_drawer_scene_1.03.01.mp4" type="video/mp4">
+                <source src="static/video/human_drawing/rt_traj_2_5d/restock_drawer_scene_1.03.01.mp4" type="video/mp4">
               </video>
             </div>
             <div class="item">
               <video autoplay controls muted loop>
-                <source src="static/video/human_drawing/rt-traj-2.5d/restock_drawer_scene_1.04.01.mp4" type="video/mp4">
+                <source src="static/video/human_drawing/rt_traj_2_5d/restock_drawer_scene_1.04.01.mp4" type="video/mp4">
               </video>
             </div>
             <div class="item">
               <video autoplay controls muted loop>
-                <source src="static/video/human_drawing/rt-traj-2.5d/restock_drawer_scene_1.05.01.mp4" type="video/mp4">
+                <source src="static/video/human_drawing/rt_traj_2_5d/restock_drawer_scene_1.05.01.mp4" type="video/mp4">
               </video>
             </div>
           </div>
           <div class="carousel results-carousel">
             <div class="item">
               <video autoplay controls muted loop>
-                <source src="static/video/human_drawing/rt-traj-2.5d/restock_drawer_scene_2.00.01.mp4" type="video/mp4">
+                <source src="static/video/human_drawing/rt_traj_2_5d/restock_drawer_scene_2.00.01.mp4" type="video/mp4">
               </video>
             </div>
             <div class="item">
               <video autoplay controls muted loop>
-                <source src="static/video/human_drawing/rt-traj-2.5d/restock_drawer_scene_2.01.01.mp4" type="video/mp4">
+                <source src="static/video/human_drawing/rt_traj_2_5d/restock_drawer_scene_2.01.01.mp4" type="video/mp4">
               </video>
             </div>
             <div class="item">
               <video autoplay controls muted loop>
-                <source src="static/video/human_drawing/rt-traj-2.5d/restock_drawer_scene_2.02.01.mp4" type="video/mp4">
+                <source src="static/video/human_drawing/rt_traj_2_5d/restock_drawer_scene_2.02.01.mp4" type="video/mp4">
               </video>
             </div>
             <div class="item">
               <video autoplay controls muted loop>
-                <source src="static/video/human_drawing/rt-traj-2.5d/restock_drawer_scene_2.03.01.mp4" type="video/mp4">
+                <source src="static/video/human_drawing/rt_traj_2_5d/restock_drawer_scene_2.03.01.mp4" type="video/mp4">
               </video>
             </div>
             <div class="item">
               <video autoplay controls muted loop>
-                <source src="static/video/human_drawing/rt-traj-2.5d/restock_drawer_scene_2.04.01.mp4" type="video/mp4">
+                <source src="static/video/human_drawing/rt_traj_2_5d/restock_drawer_scene_2.04.01.mp4" type="video/mp4">
               </video>
             </div>
             <div class="item">
               <video autoplay controls muted loop>
-                <source src="static/video/human_drawing/rt-traj-2.5d/restock_drawer_scene_2.05.01.mp4" type="video/mp4">
+                <source src="static/video/human_drawing/rt_traj_2_5d/restock_drawer_scene_2.05.01.mp4" type="video/mp4">
               </video>
             </div>
           </div>
@@ -437,32 +442,32 @@
           <div class="carousel results-carousel">
             <div class="item">
               <video autoplay controls muted loop>
-                <source src="static/video/human_drawing/rt-traj-2.5d/pick_from_chair_scene_2.00.01.mp4" type="video/mp4">
+                <source src="static/video/human_drawing/rt_traj_2_5d/pick_from_chair_scene_2.00.01.mp4" type="video/mp4">
               </video>
             </div>
             <div class="item">
               <video autoplay controls muted loop>
-                <source src="static/video/human_drawing/rt-traj-2.5d/pick_from_chair_scene_2.00.02.mp4" type="video/mp4">
+                <source src="static/video/human_drawing/rt_traj_2_5d/pick_from_chair_scene_2.00.02.mp4" type="video/mp4">
               </video>
             </div>
             <div class="item">
               <video autoplay controls muted loop>
-                <source src="static/video/human_drawing/rt-traj-2.5d/pick_from_chair_scene_2.00.03.mp4" type="video/mp4">
+                <source src="static/video/human_drawing/rt_traj_2_5d/pick_from_chair_scene_2.00.03.mp4" type="video/mp4">
               </video>
             </div>
             <div class="item">
               <video autoplay controls muted loop>
-                <source src="static/video/human_drawing/rt-traj-2.5d/pick_from_chair_scene_1.00.01.mp4" type="video/mp4">
+                <source src="static/video/human_drawing/rt_traj_2_5d/pick_from_chair_scene_1.00.01.mp4" type="video/mp4">
               </video>
             </div>
             <div class="item">
               <video autoplay controls muted loop>
-                <source src="static/video/human_drawing/rt-traj-2.5d/pick_from_chair_scene_1.00.03.mp4" type="video/mp4">
+                <source src="static/video/human_drawing/rt_traj_2_5d/pick_from_chair_scene_1.00.03.mp4" type="video/mp4">
               </video>
             </div>
             <div class="item">
               <video autoplay controls muted loop>
-                <source src="static/video/human_drawing/rt-traj-2.5d/pick_from_chair_scene_3.00.01.mp4" type="video/mp4">
+                <source src="static/video/human_drawing/rt_traj_2_5d/pick_from_chair_scene_3.00.01.mp4" type="video/mp4">
               </video>
             </div>
           </div>
@@ -480,32 +485,32 @@
           <div class="carousel results-carousel">
             <div class="item">
               <video autoplay controls muted loop>
-                <source src="static/video/human_drawing/rt-traj-2.5d/swivel_chair_scene_1.00.01.mp4" type="video/mp4">
+                <source src="static/video/human_drawing/rt_traj_2_5d/swivel_chair_scene_1.00.01.mp4" type="video/mp4">
               </video>
             </div>
             <div class="item">
               <video autoplay controls muted loop>
-                <source src="static/video/human_drawing/rt-traj-2.5d/swivel_chair_scene_1.00.02.mp4" type="video/mp4">
+                <source src="static/video/human_drawing/rt_traj_2_5d/swivel_chair_scene_1.00.02.mp4" type="video/mp4">
               </video>
             </div>
             <div class="item">
               <video autoplay controls muted loop>
-                <source src="static/video/human_drawing/rt-traj-2.5d/swivel_chair_scene_1.00.03.mp4" type="video/mp4">
+                <source src="static/video/human_drawing/rt_traj_2_5d/swivel_chair_scene_1.00.03.mp4" type="video/mp4">
               </video>
             </div>
             <div class="item">
               <video autoplay controls muted loop>
-                <source src="static/video/human_drawing/rt-traj-2.5d/swivel_chair_scene_1.00.04.mp4" type="video/mp4">
+                <source src="static/video/human_drawing/rt_traj_2_5d/swivel_chair_scene_1.00.04.mp4" type="video/mp4">
               </video>
             </div>
             <div class="item">
               <video autoplay controls muted loop>
-                <source src="static/video/human_drawing/rt-traj-2.5d/swivel_chair_scene_1.00.05.mp4" type="video/mp4">
+                <source src="static/video/human_drawing/rt_traj_2_5d/swivel_chair_scene_1.00.05.mp4" type="video/mp4">
               </video>
             </div>
             <div class="item">
               <video autoplay controls muted loop>
-                <source src="static/video/human_drawing/rt-traj-2.5d/swivel_chair_scene_1.00.06.mp4" type="video/mp4">
+                <source src="static/video/human_drawing/rt_traj_2_5d/swivel_chair_scene_1.00.06.mp4" type="video/mp4">
               </video>
             </div>
           </div>
