@@ -1,0 +1,37 @@
+body {
+  font-family: 'Noto Sans', sans-serif;
+}
+
+.publication-title {
+  font-family: 'Google Sans', sans-serif;
+}
+
+.results-carousel {
+  overflow: hidden;
+}
+
+.results-carousel .item {
+  margin: 5px;
+  overflow: hidden;
+  /* border: 1px solid #bbb;
+  border-radius: 10px; */
+  padding: 0;
+  /* font-size: 0; */
+}
+
+.results-carousel video {
+  margin: 0;
+  display: inline-block;
+  /* border: 1px transparent; */
+  /* border-radius: 10px; */
+  width: 100%;
+}
+
+.tt {
+  font-family: "Lucida Console", "Menlo", "Monaco", "Courier", monospace;
+}
+
+.hljs {
+  overflow-y: auto;
+  max-height: 256px;
+}
